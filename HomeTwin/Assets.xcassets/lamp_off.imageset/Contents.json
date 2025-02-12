@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "lamp_off.png",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

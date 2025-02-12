@@ -1,0 +1,180 @@
+{
+    "version": 8,
+    "imports": [
+        {
+            "id": "basemap",
+            "url": "mapbox://styles/mapbox/standard",
+            "config": {
+                "lightPreset": "night"
+            }
+        }
+    ],
+    "sources": {},
+    "layers": [
+        {
+            "id": "clip-area",
+            "type": "clip",
+            "source": "home",
+            "filter": [
+                "all",
+                ["==", ["get", "indoor"], "floorplan"]
+            ],
+            "layout": {
+                "clip-layer-types": ["model", "symbol", "fill-extrusion"]
+            }
+        },
+        {
+            "id": "floor",
+            "type": "fill-extrusion",
+            "source": "home",
+            "filter": [
+                "any",
+                ["==", ["get", "indoor"], "floorplan"],
+                ["==", ["get", "indoor"], "roof"]
+            ],
+            "paint": {
+                "fill-extrusion-color": "hsl(15, 21%, 90%)",
+                "fill-extrusion-emissive-strength": 0.2,
+                "fill-extrusion-base": [
+                    "case",
+                    ["==", ["to-number", ["get", "level"]], ["get", "selected-level"]],
+                    ["*", 2.0, ["to-number", ["get", "level"]]],
+                    0.02
+                ],
+                "fill-extrusion-height": [
+                    "case",
+                    ["==", ["to-number", ["get", "level"]], ["get", "selected-level"]],
+                    ["+", 0.01, ["*", 2.0, ["to-number", ["get", "level"]]]],
+                    0.03
+                ]
+            }
+        },
+        {
+            "id": "walls",
+            "type": "fill-extrusion",
+            "source": "home",
+            "filter": [
+                "all",
+                ["==", ["get", "indoor"], "wall"]
+            ],
+            "paint": {
+                "fill-extrusion-color": "hsl(15, 21%, 78%)",
+                "fill-extrusion-height": [
+                    "case",
+                    ["<=", ["to-number", ["get", "level"]], ["get", "selected-level"]],
+                    ["*", 2.0, ["+", 1.0, ["to-number", ["get", "level"]]]],
+                    0.02  
+                ],
+                "fill-extrusion-base": [
+                    "case",
+                    ["<=", ["to-number", ["get", "level"]], ["get", "selected-level"]],
+                    ["*", 2.0, ["to-number", ["get", "level"]]],
+                    0.01
+                ],
+                "fill-extrusion-line-width": 0.2,
+                "fill-extrusion-emissive-strength": 0.4
+            }
+        },
+        {
+            "id": "objects",
+            "type": "fill-extrusion",
+            "source": "home",
+            "filter": [
+                "all",
+                ["==", ["get", "indoor"], "object"]
+            ],
+            "paint": {
+                "fill-extrusion-color": "hsl(15, 21%, 78%)",
+                "fill-extrusion-height": [
+                    "case",
+                    ["<=", ["to-number", ["get", "level"]], ["get", "selected-level"]],
+                    ["+", 1.0, ["*", 2.0, ["to-number", ["get", "level"]]]],
+                    0.02  
+                ],
+                "fill-extrusion-base": [
+                    "case",
+                    ["<=", ["to-number", ["get", "level"]], ["get", "selected-level"]],
+                    ["*", 2.0, ["to-number", ["get", "level"]]],
+                    0.01
+                ],
+                "fill-extrusion-emissive-strength": 0.4
+            }
+        },
+        {
+            "id": "stairs",
+            "type": "fill-extrusion",
+            "source": "home",
+            "filter": [
+                "all",
+                ["==", ["get", "indoor"], "stair"]
+            ],
+            "paint": {
+                "fill-extrusion-color": "hsl(15, 21%, 78%)",
+                "fill-extrusion-base": ["*", 2.0, ["to-number", ["get", "stair-progress"]]],
+                "fill-extrusion-height": ["+", 0.1, ["*", 2.0, ["to-number", ["get", "stair-progress"]]]],
+                "fill-extrusion-emissive-strength": 0.2
+            }
+        },
+        {
+            "id": "lamps",
+            "type": "symbol",
+            "source": "home",
+            "filter": [
+                "all",
+                ["==", ["get", "indoor"], "lamp"],
+                [
+                    "any",
+                    ["!", ["has", "level"]],
+                    ["==", ["to-number", ["get", "level"]], ["get", "selected-level"]]
+                ]
+            ],
+            "layout": {
+                "icon-image": [
+                    "case",
+                    ["boolean", ["get", "isOn"], false],
+                    "lamp_on",
+                    "lamp_off"
+                ],
+                "icon-allow-overlap": true,
+                "symbol-z-elevate": true
+            }
+        },
+        {
+            "id": "temperature",
+            "type": "symbol",
+            "source": "home",
+            "filter": [
+                "all",
+                ["==", ["get", "indoor"], "temperature_sensor"],
+                [
+                    "any",
+                    ["!", ["has", "level"]],
+                    ["==", ["to-number", ["get", "level"]], ["get", "selected-level"]]
+                ]
+            ],
+            "layout": {
+                "text-field": ["concat", ["get", "temperature"], "°C"],
+                "text-allow-overlap": true,
+                "symbol-z-elevate": true
+            },
+            "paint": {
+                "symbol-z-offset": 0.5,
+                "text-halo-width": 1.0,
+                "text-halo-color": "white"
+            }
+        },
+        {
+            "id": "staircase",
+            "type": "symbol",
+            "source": "home",
+            "filter": [
+                "all",
+                ["==", ["get", "indoor"], "staircase"]
+            ],
+            "layout": {
+                "icon-image": "stairs",
+                "symbol-z-elevate": true
+            }
+        }
+    ]
+}
