@@ -1,3 +1,17 @@
+# HomeTwin
+
+## Overview
+
+This project is a simple, customizable, 3D smart home visualization tool, created using Apple's [HomeKit framework](https://developer.apple.com/documentation/homekit/) and [Mapbox Maps SDK](https://docs.mapbox.com/ios/maps/guides/).
+
+![IMG_0158](https://github.com/user-attachments/assets/baaa2229-5d83-46bd-b0de-e492560e6f91)
+
+Features:
+- Georeferenced indoor map, customizable to your home
+- Multi floor support with floor selector
+- Control state of lamps and power sockets
+- Display temperature sensor data
+
 ## Getting started
 
 1. Create `HomeTwin/Info.plist` with the following content, fill in the blanks with the required values:
