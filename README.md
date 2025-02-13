@@ -4,6 +4,8 @@
 
 This project is a simple, customizable, 3D smart home visualization tool, created using Apple's [HomeKit framework](https://developer.apple.com/documentation/homekit/) and [Mapbox Maps SDK](https://docs.mapbox.com/ios/maps/guides/).
 
+Read more on my blog about the data preparation steps: [https://headprocess.com/other/2025/02/12/hometwin](https://headprocess.com/other/2025/02/12/hometwin)
+
 ![IMG_0158](https://github.com/user-attachments/assets/baaa2229-5d83-46bd-b0de-e492560e6f91)
 
 Features:
